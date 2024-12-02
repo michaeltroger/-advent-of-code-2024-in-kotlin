@@ -38,14 +38,14 @@ fun main() {
         }
     }
 
-    // day1
+    // part1
     val testInput = readInput("Day01_test")
     val input = readInput("Day01")
 
     check(part1(testInput) == 11) { "part1 check failed" }
     part1(input).println()
 
-    // day2
+    // part2
     check(part2(testInput) == 31) { "part2 check failed" }
     part2(input).println()
 }
