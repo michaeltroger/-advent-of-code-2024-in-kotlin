@@ -1,5 +1,3 @@
-import kotlin.math.abs
-
 fun main() {
 
     fun isSafePart1(
@@ -34,13 +32,11 @@ fun main() {
     }
 
     fun isSafePart2(input: List<Int>): Boolean {
-        val respectsWindowSize = input.windowed(2).all { (current, next) ->
-            abs(current - next) in 1..3
+        return input.windowed(2).all { (current, next) ->
+            next - current in 1..3
+        } || input.windowed(2).all { (current, next) ->
+            next - current in -3..-1
         }
-        return respectsWindowSize && (
-                input == input.sorted() ||
-                input == input.sortedDescending()
-                )
     }
 
     fun part2(input: List<String>): Int {
