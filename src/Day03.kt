@@ -3,7 +3,7 @@ fun main() {
     fun part1(input: List<String>): Int {
         val parsedInput = input.joinToString(" ")
 
-        return "mul\\((\\d{1,3}),(\\d{1,3})\\)".toRegex().findAll(parsedInput)
+        return """mul\((\d{1,3}),(\d{1,3})\)""".toRegex().findAll(parsedInput)
             .sumOf {
                 val (_, first, second) = it.groupValues
                 first.toInt() * second.toInt()
@@ -14,7 +14,7 @@ fun main() {
         val parsedInput = input.joinToString(" ")
 
         var isEnabled = true
-        return "mul\\((\\d{1,3}),(\\d{1,3})\\)|don't\\(\\)|do\\(\\)".toRegex().findAll(parsedInput).map {
+        return """mul\((\d{1,3}),(\d{1,3})\)|don't\(\)|do\(\)""".toRegex().findAll(parsedInput).map {
             it.groupValues
         }.sumOf {
             if (it[0].startsWith("do()")) {
