@@ -13,17 +13,14 @@ fun main() {
             it[1]
         }.sorted()
 
-        return (inputAsNumbers.indices).map {
-            firstList[it] to secondList[it]
-        }.sumOf {
-            abs(it.first - it.second)
+        return (inputAsNumbers.indices).sumOf {
+            abs(firstList[it] - secondList[it])
         }
     }
 
     fun part2(input: List<String>): Int {
-        val inputAsNumbers = input.map {
-            it.split("   ")
-                .map { it.toInt() }
+        val inputAsNumbers = input.map { line->
+            line.split("   ").map { it.toInt() }
         }
         val firstList = inputAsNumbers.map {
             it[0]
