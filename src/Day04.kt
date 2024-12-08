@@ -1,5 +1,9 @@
 fun main() {
 
+    fun List<String>.getChar(x: Int, y: Int): Char? {
+        return getOrNull(y)?.getOrNull(x)
+    }
+
     fun part1(input: List<String>): Int {
         val coordinatesStartLetter: List<Pair<Int, Int>> = buildList {
             input.forEachIndexed { y, row ->
@@ -13,58 +17,58 @@ fun main() {
             coordinatesStartLetter.forEach { coordinates ->
                 val (x, y) = coordinates
                 if (
-                    input.getOrNull(y-3)?.getOrNull(x-3) == 'S' &&
-                    input.getOrNull(y-2)?.getOrNull(x-2) == 'A' &&
-                    input.getOrNull(y-1)?.getOrNull(x-1) == 'M'
-                    ) {
-                    add(coordinates)
-                }
-                if (
-                    input.getOrNull(y+3)?.getOrNull(x+3) == 'S' &&
-                    input.getOrNull(y+2)?.getOrNull(x+2) == 'A' &&
-                    input.getOrNull(y+1)?.getOrNull(x+1) == 'M'
-                    ) {
-                    add(coordinates)
-                }
-                if (
-                    input.getOrNull(y-3)?.getOrNull(x+3) == 'S' &&
-                    input.getOrNull(y-2)?.getOrNull(x+2) == 'A' &&
-                    input.getOrNull(y-1)?.getOrNull(x+1) == 'M'
+                    input.getChar(x-3, y-3) == 'S' &&
+                    input.getChar(x-2, y-2) == 'A' &&
+                    input.getChar(x-1, y-1) == 'M'
                 ) {
                     add(coordinates)
                 }
                 if (
-                    input.getOrNull(y+3)?.getOrNull(x-3) == 'S' &&
-                    input.getOrNull(y+2)?.getOrNull(x-2) == 'A' &&
-                    input.getOrNull(y+1)?.getOrNull(x-1) == 'M'
+                    input.getChar(x+3, y+3) == 'S' &&
+                    input.getChar(x+2, y+2) == 'A' &&
+                    input.getChar(x+1, y+1) == 'M'
                 ) {
                     add(coordinates)
                 }
                 if (
-                    input.getOrNull(y+3)?.getOrNull(x) == 'S' &&
-                    input.getOrNull(y+2)?.getOrNull(x) == 'A' &&
-                    input.getOrNull(y+1)?.getOrNull(x) == 'M'
+                    input.getChar(x+3, y-3) == 'S' &&
+                    input.getChar(x+2, y-2) == 'A' &&
+                    input.getChar(x+1, y-1) == 'M'
                 ) {
                     add(coordinates)
                 }
                 if (
-                    input.getOrNull(y)?.getOrNull(x-3) == 'S' &&
-                    input.getOrNull(y)?.getOrNull(x-2) == 'A' &&
-                    input.getOrNull(y)?.getOrNull(x-1) == 'M'
+                    input.getChar(x-3, y+3) == 'S' &&
+                    input.getChar(x-2, y+2) == 'A' &&
+                    input.getChar(x-1, y+1) == 'M'
                 ) {
                     add(coordinates)
                 }
                 if (
-                    input.getOrNull(y-3)?.getOrNull(x) == 'S' &&
-                    input.getOrNull(y-2)?.getOrNull(x) == 'A' &&
-                    input.getOrNull(y-1)?.getOrNull(x) == 'M'
+                    input.getChar(x, y+3) == 'S' &&
+                    input.getChar(x, y+2) == 'A' &&
+                    input.getChar(x, y+1) == 'M'
                 ) {
                     add(coordinates)
                 }
                 if (
-                    input.getOrNull(y)?.getOrNull(x+3) == 'S' &&
-                    input.getOrNull(y)?.getOrNull(x+2) == 'A' &&
-                    input.getOrNull(y)?.getOrNull(x+1) == 'M'
+                    input.getChar(x-3, y) == 'S' &&
+                    input.getChar(x-2, y) == 'A' &&
+                    input.getChar(x-1, y) == 'M'
+                ) {
+                    add(coordinates)
+                }
+                if (
+                    input.getChar(x, y-3) == 'S' &&
+                    input.getChar(x, y-2) == 'A' &&
+                    input.getChar(x, y-1) == 'M'
+                ) {
+                    add(coordinates)
+                }
+                if (
+                    input.getChar(x+3, y) == 'S' &&
+                    input.getChar(x+2, y) == 'A' &&
+                    input.getChar(x+1, y) == 'M'
                 ) {
                     add(coordinates)
                 }
@@ -88,12 +92,12 @@ fun main() {
 
             if (
                 (
-                    input.getOrNull(y + 1)?.getOrNull(x + 1) == 'M' &&
-                    input.getOrNull(y - 1)?.getOrNull(x - 1) == 'S'
+                        input.getChar(x+1, y+1) == 'M' &&
+                        input.getChar(x-1, y-1) == 'S'
                 ) ||
                 (
-                    input.getOrNull(y - 1)?.getOrNull(x - 1) == 'M' &&
-                    input.getOrNull(y + 1)?.getOrNull(x + 1) == 'S'
+                        input.getChar(x-1, y-1) == 'M' &&
+                        input.getChar(x+1, y+1) == 'S'
                 )
             ) {
                 bottomRightToTopLeftFound = true
@@ -101,12 +105,12 @@ fun main() {
 
             if (
                 (
-                    input.getOrNull(y - 1)?.getOrNull(x + 1) == 'M' &&
-                    input.getOrNull(y + 1)?.getOrNull(x - 1) == 'S'
+                    input.getChar(x+1, y-1) == 'M' &&
+                    input.getChar(x-1, y+1) == 'S'
                 ) ||
                 (
-                    input.getOrNull(y + 1)?.getOrNull(x - 1) == 'M' &&
-                    input.getOrNull(y - 1)?.getOrNull(x + 1) == 'S'
+                    input.getChar(x-1, y+1) == 'M' &&
+                    input.getChar(x+1, y-1) == 'S'
                 )
             ) {
                 bottomLeftToTopRightFound = true
