@@ -87,36 +87,10 @@ fun main() {
 
         return coordinatesStartLetter.mapNotNull {  coordinates ->
             val (x, y) = coordinates
-            var bottomLeftToTopRightFound = false
-            var bottomRightToTopLeftFound = false
 
-            if (
-                (
-                        input.getChar(x+1, y+1) == 'M' &&
-                        input.getChar(x-1, y-1) == 'S'
-                ) ||
-                (
-                        input.getChar(x-1, y-1) == 'M' &&
-                        input.getChar(x+1, y+1) == 'S'
-                )
-            ) {
-                bottomRightToTopLeftFound = true
-            }
+            val xText = "${input.getChar(x+1, y+1)}${input.getChar(x-1, y-1)}${input.getChar(x-1, y+1)}${input.getChar(x+1, y-1)}"
 
-            if (
-                (
-                    input.getChar(x+1, y-1) == 'M' &&
-                    input.getChar(x-1, y+1) == 'S'
-                ) ||
-                (
-                    input.getChar(x-1, y+1) == 'M' &&
-                    input.getChar(x+1, y-1) == 'S'
-                )
-            ) {
-                bottomLeftToTopRightFound = true
-            }
-
-            if (bottomLeftToTopRightFound && bottomRightToTopLeftFound) {
+            if (xText in listOf("MSSM", "MSMS", "SMSM", "SMMS")) {
                 coordinates
             } else {
                 null
