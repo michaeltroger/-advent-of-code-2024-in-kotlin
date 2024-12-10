@@ -13,25 +13,21 @@ fun main() {
             }
         }
 
-        return buildList {
-            coordinatesStartLetter.forEach { coordinates ->
-                val (x, y) = coordinates
-                listOf(
-                    "${input.getChar(x-1, y-1)}${input.getChar(x-2, y-2)}${input.getChar(x-3, y-3)}",
-                    "${input.getChar(x+1, y+1)}${input.getChar(x+2, y+2)}${input.getChar(x+3, y+3)}",
-                    "${input.getChar(x+1, y-1)}${input.getChar(x+2, y-2)}${input.getChar(x+3, y-3)}",
-                    "${input.getChar(x-1, y+1)}${input.getChar(x-2, y+2)}${input.getChar(x-3, y+3)}",
-                    "${input.getChar(x, y+1)}${input.getChar(x, y+2)}${input.getChar(x, y+3)}",
-                    "${input.getChar(x-1, y)}${input.getChar(x-2, y)}${input.getChar(x-3, y)}",
-                    "${input.getChar(x, y-1)}${input.getChar(x, y-2)}${input.getChar(x, y-3)}",
-                    "${input.getChar(x+1, y)}${input.getChar(x+2, y)}${input.getChar(x+3, y)}"
-                ).filter {
-                    it == "MAS"
-                }.map {
-                    add(coordinates)
-                }
+        return coordinatesStartLetter.map { coordinates ->
+            val (x, y) = coordinates
+            listOf(
+                "${input.getChar(x-1, y-1)}${input.getChar(x-2, y-2)}${input.getChar(x-3, y-3)}",
+                "${input.getChar(x+1, y+1)}${input.getChar(x+2, y+2)}${input.getChar(x+3, y+3)}",
+                "${input.getChar(x+1, y-1)}${input.getChar(x+2, y-2)}${input.getChar(x+3, y-3)}",
+                "${input.getChar(x-1, y+1)}${input.getChar(x-2, y+2)}${input.getChar(x-3, y+3)}",
+                "${input.getChar(x, y+1)}${input.getChar(x, y+2)}${input.getChar(x, y+3)}",
+                "${input.getChar(x-1, y)}${input.getChar(x-2, y)}${input.getChar(x-3, y)}",
+                "${input.getChar(x, y-1)}${input.getChar(x, y-2)}${input.getChar(x, y-3)}",
+                "${input.getChar(x+1, y)}${input.getChar(x+2, y)}${input.getChar(x+3, y)}"
+            ).filter {
+                it == "MAS"
             }
-        }.count()
+        }.flatten().count()
     }
 
     fun part2(input: List<String>): Int {
