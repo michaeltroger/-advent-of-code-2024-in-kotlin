@@ -13,8 +13,7 @@ fun main() {
             }
         }
 
-        return coordinatesStartLetter.map { coordinates ->
-            val (x, y) = coordinates
+        return coordinatesStartLetter.map { (x, y) ->
             listOf(
                 "${input.getChar(x-1, y-1)}${input.getChar(x-2, y-2)}${input.getChar(x-3, y-3)}",
                 "${input.getChar(x+1, y+1)}${input.getChar(x+2, y+2)}${input.getChar(x+3, y+3)}",
@@ -39,7 +38,7 @@ fun main() {
             }
         }
 
-        return coordinatesStartLetter.mapNotNull {  coordinates ->
+        return coordinatesStartLetter.mapNotNull { coordinates ->
             val (x, y) = coordinates
 
             val xText = "${input.getChar(x+1, y+1)}${input.getChar(x-1, y-1)}${input.getChar(x-1, y+1)}${input.getChar(x+1, y-1)}"
