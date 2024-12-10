@@ -2,18 +2,14 @@ fun main() {
 
     fun part1(input: List<String>): Int {
         val indexLineBreak = input.indexOfFirst { it.isBlank() }
-        val pageOrderingRules = buildSet {
-            input.take(indexLineBreak).forEach { rule ->
-                add(rule.substringBefore('|') + rule.substringAfter('|'))
-            }
-        }
+        val pageOrderingRules = input.take(indexLineBreak).toSet()
 
         val updates = input.drop(indexLineBreak+1).map { update->
             update.split(",")
         }
 
         val comparator = Comparator<String> { valueOne, valueTwo ->
-            if (pageOrderingRules.contains(valueOne+valueTwo)){
+            if (pageOrderingRules.contains("$valueOne|$valueTwo")){
                -1
            } else {
                0
@@ -32,18 +28,14 @@ fun main() {
 
     fun part2(input: List<String>): Int {
         val indexLineBreak = input.indexOfFirst { it.isBlank() }
-        val pageOrderingRules = buildSet {
-            input.take(indexLineBreak).forEach { rule ->
-                add(rule.substringBefore('|') + rule.substringAfter('|'))
-            }
-        }
+        val pageOrderingRules = input.take(indexLineBreak).toSet()
 
         val updates = input.drop(indexLineBreak+1).map { update->
             update.split(",")
         }
 
         val comparator = Comparator<String> { valueOne, valueTwo ->
-            if (pageOrderingRules.contains(valueOne+valueTwo)){
+            if (pageOrderingRules.contains("$valueOne|$valueTwo")){
                 -1
             } else {
                 0
