@@ -2,13 +2,9 @@ fun main() {
 
     fun part1(input: List<String>): Int {
         val indexLineBreak = input.indexOfFirst { it.isBlank() }
-        val pageOrderingRulesMap: Map<String, List<String>> = buildMap {
+        val pageOrderingRules = buildSet {
             input.take(indexLineBreak).forEach { rule ->
-                val ruleAsList = rule.split("|")
-                val list = getOrElse(ruleAsList[0]) {
-                    emptyList()
-                }
-                set(ruleAsList[0], list + ruleAsList[1])
+                add(rule.substringBefore('|') + rule.substringAfter('|'))
             }
         }
 
@@ -17,7 +13,7 @@ fun main() {
         }
 
         val comparator = Comparator<String> { valueOne, valueTwo ->
-           if (pageOrderingRulesMap.contains(valueOne) && pageOrderingRulesMap[valueOne]!!.contains(valueTwo)){
+            if (pageOrderingRules.contains(valueOne+valueTwo)){
                -1
            } else {
                0
@@ -36,13 +32,9 @@ fun main() {
 
     fun part2(input: List<String>): Int {
         val indexLineBreak = input.indexOfFirst { it.isBlank() }
-        val pageOrderingRulesMap: Map<String, List<String>> = buildMap {
+        val pageOrderingRules = buildSet {
             input.take(indexLineBreak).forEach { rule ->
-                val ruleAsList = rule.split("|")
-                val list = getOrElse(ruleAsList[0]) {
-                    emptyList()
-                }
-                set(ruleAsList[0], list + ruleAsList[1])
+                add(rule.substringBefore('|') + rule.substringAfter('|'))
             }
         }
 
@@ -51,7 +43,7 @@ fun main() {
         }
 
         val comparator = Comparator<String> { valueOne, valueTwo ->
-            if (pageOrderingRulesMap.contains(valueOne) && pageOrderingRulesMap[valueOne]!!.contains(valueTwo)){
+            if (pageOrderingRules.contains(valueOne+valueTwo)){
                 -1
             } else {
                 0
