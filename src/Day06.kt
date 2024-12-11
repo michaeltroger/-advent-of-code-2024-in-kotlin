@@ -43,19 +43,17 @@ fun main() {
         }.toTypedArray()
 
         while (true) {
-            visitedMap[guard.position.x][guard.position.y] = 'X'
+            visitedMap[guard.position.y][guard.position.x] = 'X'
 
-            val tempGuard = guard.copy().apply {
-                position = getNextPosition(direction, position)
+            var potentialNextPosition = getNextPosition(guard.direction, guard.position)
+            while (getCharForPosition(map, potentialNextPosition) == '#') {
+                guard.direction = getNextDirectionAfterCollision(guard.direction)
+                potentialNextPosition = getNextPosition(guard.direction, guard.position)
             }
-            var potentialNextChar: Char? = getCharForPosition(map, tempGuard.position) ?: break
-            while (potentialNextChar == '#') {
-                tempGuard.direction = getNextDirectionAfterCollision(tempGuard.direction)
-                tempGuard.position = getNextPosition(tempGuard.direction, guard.position)
-                potentialNextChar = getCharForPosition(map, tempGuard.position)
+            if (getCharForPosition(map, potentialNextPosition) == null) {
+                break
             }
-            guard.direction = tempGuard.direction
-            guard.position = tempGuard.position
+            guard.position = potentialNextPosition
         }
         return visitedMap.flatten().count { it == 'X' }
     }
@@ -69,34 +67,36 @@ fun main() {
             }
             line.toList().toTypedArray()
         }.toTypedArray()
-        val guard = Guard(position = originalGuardPosition, direction = Direction.UP)
+        val originalGuard = Guard(position = originalGuardPosition, direction = Direction.UP)
 
-        var validObstructions = 0
+        var detectedLoop = 0
 
         map.forEachIndexed { y, row ->
             row.forEachIndexed { x, _ ->
                 if (map[y][x] == '.') {
-                    val tempGuard = guard.copy()
+                    val tempGuard = originalGuard.copy()
                     val obstructionTestMap = map.map {
                         it.clone()
-                    }.toTypedArray()
-                    obstructionTestMap[y][x] = '#'
+                    }.toTypedArray().apply {
+                        this[y][x] = '#'
+                    }
 
                     while (true) {
-                        var nextPosition = getNextPosition(tempGuard.direction, tempGuard.position)
-                        var nextChar: Char? = getCharForPosition(obstructionTestMap, nextPosition) ?: break
-                        while (nextChar == '#') {
+                        var potentialNextPosition = getNextPosition(tempGuard.direction, tempGuard.position)
+                        while (getCharForPosition(obstructionTestMap, potentialNextPosition) == '#') {
                             tempGuard.direction = getNextDirectionAfterCollision(tempGuard.direction)
-                            nextPosition = getNextPosition(tempGuard.direction, tempGuard.position)
-                            nextChar = getCharForPosition(obstructionTestMap, nextPosition)
+                            potentialNextPosition = getNextPosition(tempGuard.direction, tempGuard.position)
                         }
-                        tempGuard.position = nextPosition
-
-                        if (tempGuard.direction.char == obstructionTestMap[tempGuard.position.y][tempGuard.position.x]) {
-                            validObstructions++
+                        if (getCharForPosition(obstructionTestMap, potentialNextPosition) == null) {
                             break
                         }
-                        if (obstructionTestMap[tempGuard.position.y][tempGuard.position.x] == '.') {
+                        tempGuard.position = potentialNextPosition
+
+                        val currentChar = obstructionTestMap[tempGuard.position.y][tempGuard.position.x]
+                        if (currentChar == tempGuard.direction.char) {
+                            detectedLoop++
+                            break
+                        } else if (currentChar == '.') {
                             obstructionTestMap[tempGuard.position.y][tempGuard.position.x] = tempGuard.direction.char
                         }
                     }
@@ -104,7 +104,7 @@ fun main() {
             }
         }
 
-        return validObstructions
+        return detectedLoop
     }
 
     // part1
